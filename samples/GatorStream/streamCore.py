@@ -2,10 +2,10 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 
-ckey = ''
-csecret = ''
-atoken = ''
-asecret = ''
+ckey = '<comsumer_key>'
+csecret = '<consumer_secret>'
+atoken = '<authorization_token>'
+asecret = '<authorization_secret>'
 
 class Listener(StreamListener):
 
