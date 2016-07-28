@@ -9,4 +9,5 @@ This is the file for Service Discovery framwork
 1. Downlaod tweepy from github
 2. Install tweepy in machine by running "python setup.py install" inside tweepy dir
 3. Check if tweepy is installed by going into python REPL and type "import tweepy"
+4. pip install --upgrade ndg-httpsclient
 
