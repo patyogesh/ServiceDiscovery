@@ -57,12 +57,14 @@ def main():
     auth = OAuthHandler(secret_keys[0], secret_keys[1])
     auth.set_access_token(secret_keys[2], secret_keys[3])
 
+    t = threading.Thread(target=consumer)
+    t.start()
+
     twitterstream = Stream(auth, Listener())
     twitterstream.filter(track=['DonaldTrump'])
+    t.join()
 
-    t = threading.Thread(target=consumer)
-    t.daemon = True
-    t.start()
+
 
 
 if __name__ == "__main__":
