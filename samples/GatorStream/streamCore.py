@@ -5,6 +5,7 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 import threading
 import json
+import sys
 
 '''
 This is an array of strings in which OAuth keys/tokens are read into
@@ -33,8 +34,8 @@ class Listener(StreamListener):
         #print raw_data
         tweet_text = json.loads(raw_data)
         json.dumps(tweet_text, sort_keys=True, indent=4)
-        print "Tweet: ", tweet_text['text']
-        self.prod.send('topic1', b'msg1')
+        #print "Tweet: ", tweet_text['text']
+        self.prod.send('topic1', (tweet_text['text']).encode('utf-8', 'ignore'))
         return True
 
     def on_error(self, status_code):
@@ -53,6 +54,7 @@ def consumer():
 
 
 def main():
+    print sys.getdefaultencoding()
     keys_io()
     auth = OAuthHandler(secret_keys[0], secret_keys[1])
     auth.set_access_token(secret_keys[2], secret_keys[3])
@@ -61,7 +63,7 @@ def main():
     t.start()
 
     twitterstream = Stream(auth, Listener())
-    twitterstream.filter(track=['DonaldTrump'])
+    twitterstream.filter(track=['Trump','Hillary','Modi','nba','football','Pokemon'])
     t.join()
 
 
