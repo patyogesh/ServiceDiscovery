@@ -1,0 +1,5 @@
+.idea
+**/.DS_Store
+samples/GatorStream/tweepy-master/*
+samples/GatorStream/secret/*
+

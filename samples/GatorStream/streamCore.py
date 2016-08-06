@@ -22,21 +22,26 @@ secret_keys = []
     This method is to read OAuth keys/tokens from file
 '''
 def keys_io():
-    key_file = open('/home/yogesh/.twit_keys', 'r+')
+    key_file = open('secret/secret.txt', 'r+')
 
     for key in range(1,5):
         secret_keys.append(key_file.readline().split("=")[1].strip())
 
 
 class Listener(StreamListener):
+    print "Starting producer"
     prod = KafkaProducer(bootstrap_servers='localhost:9092')
     def on_data(self, raw_data):
-        #print raw_data
-        tweet_text = json.loads(raw_data)
-        json.dumps(tweet_text, sort_keys=True, indent=4)
-        #print "Tweet: ", tweet_text['text']
-        self.prod.send('topic1', (tweet_text['text']).encode('utf-8', 'ignore'))
-        return True
+        try:
+            #print raw_data
+            tweet_text = json.loads(raw_data)
+            json.dumps(tweet_text, sort_keys=True, indent=4)
+            #print "Tweet: ", tweet_text['text']
+            self.prod.send('topic1', (tweet_text['text']).encode('utf-8', 'ignore'))
+            return True
+        except:
+            print "exception happened!"
+
 
     def on_error(self, status_code):
         print status_code
