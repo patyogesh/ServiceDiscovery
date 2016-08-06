@@ -21,6 +21,9 @@ secret_keys = []
 @keys_io:
     This method is to read OAuth keys/tokens from file
 '''
+
+TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
+
 def keys_io():
     key_file = open('secret/secret.txt', 'r+')
 
@@ -37,7 +40,10 @@ class Listener(StreamListener):
             tweet_text = json.loads(raw_data)
             json.dumps(tweet_text, sort_keys=True, indent=4)
             #print "Tweet: ", tweet_text['text']
-            self.prod.send('topic1', (tweet_text['text']).encode('utf-8', 'ignore'))
+            data = tweet_text['text']
+            for topic in TOPICS:
+                if(data.find(topic) != -1):
+                    self.prod.send(topic, (data).encode('utf-8', 'ignore'))
             return True
         except:
             print "exception happened!"
@@ -52,7 +58,7 @@ def consumer():
     cons = KafkaConsumer(bootstrap_servers='localhost:9092',
                              auto_offset_reset='earliest')
 
-    cons.subscribe(['topic1'])
+    cons.subscribe(['Trump'])
 
     for msg in cons:
         print msg
@@ -64,13 +70,12 @@ def main():
     auth = OAuthHandler(secret_keys[0], secret_keys[1])
     auth.set_access_token(secret_keys[2], secret_keys[3])
 
-    t = threading.Thread(target=consumer)
-    t.start()
+    #t = threading.Thread(target=consumer)
+    #t.start()
 
     twitterstream = Stream(auth, Listener())
-    twitterstream.filter(track=['Trump','Hillary','Modi','nba','football','Pokemon'])
-    t.join()
-
+    twitterstream.filter(track=TOPICS)
+    #t.join()
 
 
 
