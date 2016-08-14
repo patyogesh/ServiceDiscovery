@@ -27,6 +27,8 @@ if __name__ == "__main__":
         KAFKA_SERVER_IP = sys.argv[1]
         KAFKA_SERVER_PORT = sys.argv[2]
         TOPIC = sys.argv[3]
+    except IndexError as e:
+        print("Error taking arguments : ", e)
     except Exception as e:
-        print "Error taking arguments : " + e
+        print("Unlnown error : ", e)
     createConsumer()

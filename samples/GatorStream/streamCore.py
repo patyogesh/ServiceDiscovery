@@ -46,7 +46,7 @@ class Listener(StreamListener):
                     self.prod.send(topic, (data).encode('utf-8', 'ignore'))
             return True
         except Exception as e:
-            print "exception happened! : " + e
+            print("exception happened! : ", e)
 
 
     def on_error(self, status_code):
