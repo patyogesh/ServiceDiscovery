@@ -33,7 +33,7 @@ def keys_io():
 
 class Listener(StreamListener):
     print "Starting producer"
-    prod = KafkaProducer(bootstrap_servers='10.0.2.15:9092')
+    prod = KafkaProducer(bootstrap_servers='localhost:9092')
     def on_data(self, raw_data):
         try:
             #print raw_data
@@ -45,8 +45,8 @@ class Listener(StreamListener):
                 if(data.find(topic) != -1):
                     self.prod.send(topic, (data).encode('utf-8', 'ignore'))
             return True
-        except:
-            print "exception happened!"
+        except Exception as e:
+            print "exception happened! : " + e
 
 
     def on_error(self, status_code):
@@ -55,7 +55,7 @@ class Listener(StreamListener):
 
 def consumer():
     print 'starting consumer'
-    cons = KafkaConsumer(bootstrap_servers='10.0.2.15:9092',
+    cons = KafkaConsumer(bootstrap_servers='localhost:9092',
                              auto_offset_reset='earliest')
 
     cons.subscribe(['Trump'])
