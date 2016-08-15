@@ -5,9 +5,8 @@ MAINTAINER Kafka by Bhavnesh and Yogesh <bhavnesh.gugnani@gmail.com, patyogesh@g
 RUN mkdir /usr/bin/kafka
 # copy all binaries from latest kafka package
 COPY ./package/kafka* /usr/bin/kafka/
-# copy custom configs
-RUN mkdir /usr/bin/kafka/custom-configs
-COPY ./kafka/configs /usr/bin/kafka/custom-configs/
+# copy custom configs to kafka binary package
+COPY ./kafka/configs /usr/bin/kafka/config/
 # expose some default ports (bad design to hardcode here)
 EXPOSE 9092:9092
 EXPOSE 9093:9093

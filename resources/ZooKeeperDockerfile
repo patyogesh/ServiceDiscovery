@@ -5,9 +5,8 @@ MAINTAINER Zookeeper by Bhavnesh and Yogesh <bhavnesh.gugnani@gmail.com, patyoge
 RUN mkdir /usr/bin/zookeeper
 # copy all binaries from latest kafka package
 COPY ./package/kafka* /usr/bin/zookeeper/
-# copy custom configs
-RUN mkdir /usr/bin/zookeeper/custom-configs
-COPY ./zookeeper/configs /usr/bin/zookeeper/custom-configs/
+# copy custom configs to config folder of kafka package
+COPY ./zookeeper/configs /usr/bin/zookeeper/config/
 # expose some default ports (bad design to hardcoe here)
 EXPOSE 2181:2181
 # start kafka broker
