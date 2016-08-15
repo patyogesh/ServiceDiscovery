@@ -1,0 +1,15 @@
+# need java for running kafka broker
+FROM java
+MAINTAINER Kafka by Bhavnesh and Yogesh <bhavnesh.gugnani@gmail.com, patyogesh@gmail.com>
+# make base directory
+RUN mkdir /usr/bin/kafka
+# copy all binaries from latest kafka package
+COPY ./package /usr/bin/kafka/
+# copy custom configs
+RUN mkdir /usr/bin/kafka/custom-configs
+COPY ./kafka/configs /usr/bin/kafka/custom-configs/
+# expose some default ports (bad design to hardcode here)
+EXPOSE 9092:9092
+EXPOSE 9093:9093
+EXPOSE 9094:9094
+# start kafka broker

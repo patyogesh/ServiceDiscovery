@@ -12,3 +12,8 @@ This is the file for Service Discovery framwork
 4. pip install --upgrade ndg-httpsclient
 5. pip install kafka-python
 
+
+========================Building Kafka and Zookeeper images===========
+1. Move to ./resources directory (this is context of build)
+2. Copy a deployment(/binaries) of kafka to ./package/
+3. Execute "docker build -f KafkaDockerfile -t kafka ."
