@@ -7,7 +7,7 @@ RUN mkdir /usr/bin/zookeeper
 COPY ./package/kafka* /usr/bin/zookeeper/
 # copy custom configs to config folder of kafka package
 COPY ./zookeeper/configs /usr/bin/zookeeper/config/
-# expose some default ports (bad design to hardcoe here)
+# expose some default ports (bad design to hardcode here)
 EXPOSE 2181:2181
 # start kafka broker
 WORKDIR /usr/bin/zookeeper/
