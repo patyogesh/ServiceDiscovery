@@ -4,7 +4,7 @@ MAINTAINER Kafka by Bhavnesh and Yogesh <bhavnesh.gugnani@gmail.com, patyogesh@g
 # make base directory
 RUN mkdir /usr/bin/kafka
 # copy all binaries from latest kafka package
-COPY ./package /usr/bin/kafka/
+COPY ./package/kafka* /usr/bin/kafka/
 # copy custom configs
 RUN mkdir /usr/bin/kafka/custom-configs
 COPY ./kafka/configs /usr/bin/kafka/custom-configs/
@@ -13,3 +13,5 @@ EXPOSE 9092:9092
 EXPOSE 9093:9093
 EXPOSE 9094:9094
 # start kafka broker
+WORKDIR /usr/bin/kafka/
+CMD ["bin/kafka-server-start.sh", "config/server.properties"]

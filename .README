@@ -14,6 +14,8 @@ This is the file for Service Discovery framwork
 
 
 ========================Building Kafka and Zookeeper images===========
-1. Move to ./resources directory (this is context of build)
-2. Copy a deployment(/binaries) of kafka to ./package/
-3. Execute "docker build -f KafkaDockerfile -t kafka ."
+1. Move to ./resources directory (this is context of build for docker image)
+2. Copy a deployment(/binaries) of kafka to ./package/<here>
+3. Execute "docker build -f <Kafka|Zookeeper>Dockerfile -t bhavneshgugnani/<kafka|zookeeper> ." to create corresponding kafka or zookeeper images
+4. Run using command "docker run -i -t bhavneshgugnani/<zookeeper|kafka>"
+
