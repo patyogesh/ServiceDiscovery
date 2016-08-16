@@ -33,7 +33,7 @@ def keys_io():
 
 class Listener(StreamListener):
     print "Starting producer"
-    prod = KafkaProducer(bootstrap_servers='localhost:9092')
+    prod = KafkaProducer(bootstrap_servers='10.0.0.2:9092')
     def on_data(self, raw_data):
         try:
             #print raw_data

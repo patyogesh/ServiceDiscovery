@@ -3,3 +3,5 @@ MAINTAINER Tweet Service by Yogesh and Bhavnesh <patyogesh@gmail.com, bhavnesh.g
 RUN pip install kafka-python
 RUN mkdir /usr/bin/TweetService
 COPY src/TweetConsumer.py /usr/bin/TweetService
+WORKDIR /usr/bin/TweetService/
+CMD ["python", "TweetConsumer.py", "10.0.2.2", "9092", "Modi"]
