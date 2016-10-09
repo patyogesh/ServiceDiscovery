@@ -3,4 +3,4 @@
 samples/GatorStream/tweepy-master/*
 samples/GatorStream/secret/*
 resources/package/*
-
+tweet-service/producer/resources/*

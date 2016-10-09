@@ -9,6 +9,6 @@ COPY ./package/kafka* /usr/bin/zookeeper/
 COPY ./zookeeper/configs /usr/bin/zookeeper/config/
 # expose some default ports (bad design to hardcode here)
 EXPOSE 2181:2181
-# start kafka broker
+# start zookeeper server
 WORKDIR /usr/bin/zookeeper/
 CMD ["bin/zookeeper-server-start.sh", "config/zookeeper.properties"]

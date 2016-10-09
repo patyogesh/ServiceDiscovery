@@ -1,0 +1,10 @@
+FROM python:2.7.12
+MAINTAINER Tweet Service by Yogesh and Bhavnesh <patyogesh@gmail.com, bhavnesh.gugnani@gmail.com>
+RUN pip install kafka-python
+RUN mkdir /usr/bin/TweetService
+COPY src/TweetProducer.py /usr/bin/TweetService
+COPY resources /usr/bin/TweetService
+WORKDIR /usr/bin/TweetService/tweepy-master
+RUN python setup.py install
+WORKDIR /usr/bin/TweetService
+CMD ["python", "TweetProducer.py"]
