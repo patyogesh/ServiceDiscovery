@@ -3,7 +3,7 @@
 
 # Launches the Service Discovery cluster including building images and launching them and linking them while launching
 
-# Variables
+# Variables. Kind of hardcoded based on names in properties file for kafka.
 zk="zookeeper"
 broker="kafka_broker"
 producer="kafka_producer"
