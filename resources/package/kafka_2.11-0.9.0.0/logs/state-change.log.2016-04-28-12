@@ -1,0 +1,8 @@
+[2016-04-28 13:06:47,355] TRACE Controller 1 epoch 102 sending UpdateMetadata request (Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102) to broker 2 for partition pipeline-0 (state.change.logger)
+[2016-04-28 13:06:47,355] TRACE Controller 1 epoch 102 sending UpdateMetadata request (Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102) to broker 2 for partition pipeline-2 (state.change.logger)
+[2016-04-28 13:06:47,355] TRACE Controller 1 epoch 102 sending UpdateMetadata request (Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102) to broker 1 for partition pipeline-0 (state.change.logger)
+[2016-04-28 13:06:47,355] TRACE Controller 1 epoch 102 sending UpdateMetadata request (Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102) to broker 1 for partition pipeline-2 (state.change.logger)
+[2016-04-28 13:06:47,356] TRACE Broker 1 cached leader info (LeaderAndIsrInfo:(Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102),ReplicationFactor:2),AllReplicas:2,1) for partition [pipeline,2] in response to UpdateMetadata request sent by controller 1 epoch 102 with correlation id 5 (state.change.logger)
+[2016-04-28 13:06:47,356] TRACE Broker 1 cached leader info (LeaderAndIsrInfo:(Leader:2,ISR:2,1,LeaderEpoch:82,ControllerEpoch:102),ReplicationFactor:2),AllReplicas:2,1) for partition [pipeline,0] in response to UpdateMetadata request sent by controller 1 epoch 102 with correlation id 5 (state.change.logger)
+[2016-04-28 13:06:47,356] TRACE Controller 1 epoch 102 received response {error_code=0} for a request sent to broker Node(1, 10.0.0.9, 9092) (state.change.logger)
+[2016-04-28 13:06:47,357] TRACE Controller 1 epoch 102 received response {error_code=0} for a request sent to broker Node(2, 10.0.0.9, 9093) (state.change.logger)

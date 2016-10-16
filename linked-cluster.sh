@@ -31,10 +31,10 @@ echo "CLEANUP COMPLETE."
 
 # Build fresh images
 echo "BUILDING FRESH IMAGES."
-docker build -t ${sd}/${zk}:${latest} -f ./resources/ZooKeeperDockerfile ./resources
-docker build -t ${sd}/${broker}:${latest} -f ./resources/KafkaDockerfile ./resources
-docker build -t ${sd}/${producer}:${latest} -f ./tweet-service/producer/ProducerDockerfile ./tweet-service/producer
-docker build -t ${sd}/${consumer}:${latest} -f ./tweet-service/consumer/ConsumerDockerfile ./tweet-service/consumer 
+docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
+docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
+docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
+docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
 echo "IMAGES BUILD."
 
 # Launch images in order and link. The names are somewhat hardcoded becuase of values in properties file for kafka

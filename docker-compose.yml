@@ -3,38 +3,40 @@ version : '2'
 services :
   zookeeper :
     build :
-      context : ./resources
-      dockerfile : ZookeeperDockerfile
+      context : .
+      dockerfile : ./docker-build/ZookeeperDockerfile
     #container_name : zookeeper
   
   broker :
     build :
-      context : ./resources
-      dockerfile : KafkaDockerfile
+      context : .
+      dockerfile : ./docker-build/KafkaDockerfile
     #container_name : broker
     depends_on : 
       - zookeeper
     links :
       - zookeeper
+    entrypoint : ./resources/wait-for-it.sh zookeeper:2181
 
   producer :
     build :
-      context : ./tweet-service/producer
-      dockerfile : ProducerDockerfile
+      context : .
+      dockerfile : ./docker-build/ProducerDockerfile
     #container_name : producer
-    depends_on : 
-      - zookeeper
+    depends_on :
       - broker
     links :
-      - zookeeper
       - broker
+    entrypoint : ./resources/wait-for-it.sh broker:9092
 
   consumer :
     build :
-      context : ./tweet-service/consumer
-      dockerfile : ConsumerDockerfile
+      context : .
+      dockerfile : ./docker-build/ConsumerDockerfile
     #container_name : consumer
     depends_on :
       - broker
     links :
       - broker
+    entrypoint : ./resources/wait-for-it.sh broker:9092
+
