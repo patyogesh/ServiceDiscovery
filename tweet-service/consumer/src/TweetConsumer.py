@@ -6,7 +6,7 @@ from kafka import KafkaConsumer
 import threading
 import sys
 
-KAFKA_SERVER_IP = 'localhost'
+KAFKA_SERVER_IP = 'broker'
 KAFKA_SERVER_PORT = '9092'
 TOPIC = 'Trump'
 
@@ -15,8 +15,10 @@ def createConsumer():
     cons = KafkaConsumer(bootstrap_servers=KAFKA_SERVER,
                          auto_offset_reset='earliest')
     cons.subscribe([TOPIC])
+    file=open("./tweets.txt", "w+")
     for msg in cons:
         print msg
+        file.write(str(msg))
 
 def main():
     t = threading.Thread(target=createConsumer)
