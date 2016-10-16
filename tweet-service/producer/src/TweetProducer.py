@@ -26,7 +26,7 @@ secret_keys = []
 TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
 
 def keys_io():
-    key_file = open('secret/secret.txt', 'r+')
+    key_file = open('resources/secret.txt', 'r+')
 
     for key in range(1,5):
         secret_keys.append(key_file.readline().split("=")[1].strip())
