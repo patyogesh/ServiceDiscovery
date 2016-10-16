@@ -44,7 +44,7 @@ docker run -d --name ${broker} --link ${zk}:${zk} ${sd}/${broker}:${latest}
 # This is a trick so broker can start before producer tries to start
 echo "Sleeping for 2 seconds so broker can be online while producer starts"
 sleep 2
-docker run -d --name ${producer} --link ${zk}:${zk} --link ${broker}:${broker} ${sd}/${producer}:${latest}
+docker run -d --name ${producer} --link ${broker}:${broker} ${sd}/${producer}:${latest}
 docker run -d --name ${consumer} --link ${broker}:${broker} ${sd}/${consumer}:${latest}
 echo "CLUSTER SUCCESSFULLY STARTED. YOU CAN SSH INTO CONTAINERS TO VIEW TWEETS/LOGS."
 

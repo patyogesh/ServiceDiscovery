@@ -1,0 +1,40 @@
+#project_name : ServiceDiscovery
+version : '2'
+services :
+  zookeeper :
+    build :
+      context : ./resources
+      dockerfile : ZookeeperDockerfile
+    #container_name : zookeeper
+  
+  broker :
+    build :
+      context : ./resources
+      dockerfile : KafkaDockerfile
+    #container_name : broker
+    depends_on : 
+      - zookeeper
+    links :
+      - zookeeper
+
+  producer :
+    build :
+      context : ./tweet-service/producer
+      dockerfile : ProducerDockerfile
+    #container_name : producer
+    depends_on : 
+      - zookeeper
+      - broker
+    links :
+      - zookeeper
+      - broker
+
+  consumer :
+    build :
+      context : ./tweet-service/consumer
+      dockerfile : ConsumerDockerfile
+    #container_name : consumer
+    depends_on :
+      - broker
+    links :
+      - broker
