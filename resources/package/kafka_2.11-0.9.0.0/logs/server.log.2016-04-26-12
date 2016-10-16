@@ -1,4 +1,0 @@
-[2016-04-26 13:00:04,151] INFO Creating /controller (is it secure? false) (kafka.utils.ZKCheckedEphemeral)
-[2016-04-26 13:00:04,153] INFO Result of znode creation is: OK (kafka.utils.ZKCheckedEphemeral)
-[2016-04-26 13:00:04,153] INFO 2 successfully elected as leader (kafka.server.ZookeeperLeaderElector)
-[2016-04-26 13:00:04,197] INFO re-registering broker info in ZK for broker 2 (kafka.server.KafkaHealthcheck)

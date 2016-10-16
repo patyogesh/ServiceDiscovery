@@ -1,2 +1,0 @@
-[2016-04-24 13:55:16,190] DEBUG preRegister called. Server=com.sun.jmx.mbeanserver.JmxMBeanServer@66d3c617, name=log4j:logger=state.change.logger (state.change.logger)
-[2016-04-24 13:55:52,937] TRACE Controller 1 epoch 1 received response {error_code=0} for a request sent to broker Node(1, 10.0.0.9, 9092) (state.change.logger)

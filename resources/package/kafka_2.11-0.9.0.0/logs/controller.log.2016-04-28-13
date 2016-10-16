@@ -1,3 +1,0 @@
-[2016-04-28 13:06:47,345] DEBUG [IsrChangeNotificationListener] Fired!!! (kafka.controller.IsrChangeNotificationListener)
-[2016-04-28 13:06:47,355] DEBUG Sending MetadataRequest to Brokers:ArrayBuffer(1, 2) for TopicAndPartitions:Set([pipeline,2], [pipeline,0]) (kafka.controller.IsrChangeNotificationListener)
-[2016-04-28 13:06:47,357] DEBUG [IsrChangeNotificationListener] Fired!!! (kafka.controller.IsrChangeNotificationListener)

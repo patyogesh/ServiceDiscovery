@@ -1,7 +1,0 @@
-[2016-04-28 21:02:19,630] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 1 milliseconds. (kafka.coordinator.GroupMetadataManager)
-[2016-04-28 21:12:19,611] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.GroupMetadataManager)
-[2016-04-28 21:22:19,589] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.GroupMetadataManager)
-[2016-04-28 21:32:19,567] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.GroupMetadataManager)
-[2016-04-28 21:42:19,550] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.GroupMetadataManager)
-[2016-04-28 21:43:39,006] INFO Partition [pipeline,1] on broker 1: Shrinking ISR for partition [pipeline,1] from 2,1 to 1 (kafka.cluster.Partition)
-[2016-04-28 21:53:08,005] INFO [Group Metadata Manager on Broker 1]: Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.GroupMetadataManager)

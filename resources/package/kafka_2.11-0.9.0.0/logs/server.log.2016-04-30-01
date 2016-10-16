@@ -1,1 +1,0 @@
-[2016-04-30 03:25:05,967] WARN [ReplicaFetcherThread-0-2], Error in fetch kafka.server.ReplicaFetcherThread$FetchRequest@422a0254. Possible cause: java.io.IOException: Connection to 2 was disconnected before the response was read (kafka.server.ReplicaFetcherThread)

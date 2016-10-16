@@ -1,1 +1,0 @@
-[2016-04-25 02:07:45,010] INFO Partition [pipeline,1] on broker 1: Shrinking ISR for partition [pipeline,1] from 1,2 to 1 (kafka.cluster.Partition)
