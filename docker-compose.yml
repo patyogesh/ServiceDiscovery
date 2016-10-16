@@ -4,39 +4,38 @@ services :
   zookeeper :
     build :
       context : .
-      dockerfile : ./docker-build/ZookeeperDockerfile
-    #container_name : zookeeper
+      dockerfile : ./docker-build/ZooKeeperDockerfile
+    container_name : zookeeper
   
   broker :
     build :
       context : .
       dockerfile : ./docker-build/KafkaDockerfile
-    #container_name : broker
+    container_name : broker
     depends_on : 
       - zookeeper
     links :
       - zookeeper
-    entrypoint : ./resources/wait-for-it.sh zookeeper:2181
+    entrypoint : ./wait-for-it.sh zookeeper:2181
 
   producer :
     build :
       context : .
       dockerfile : ./docker-build/ProducerDockerfile
-    #container_name : producer
+    container_name : producer
     depends_on :
       - broker
     links :
       - broker
-    entrypoint : ./resources/wait-for-it.sh broker:9092
+    entrypoint : ./wait-for-it.sh broker:9092
 
   consumer :
     build :
       context : .
       dockerfile : ./docker-build/ConsumerDockerfile
-    #container_name : consumer
+    container_name : consumer
     depends_on :
       - broker
     links :
       - broker
-    entrypoint : ./resources/wait-for-it.sh broker:9092
-
+    entrypoint : ./wait-for-it.sh broker:9092
