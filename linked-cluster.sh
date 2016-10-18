@@ -29,22 +29,23 @@ docker rmi ${sd}/${producer}
 docker rmi ${sd}/${consumer}
 echo "CLEANUP COMPLETE."
 
-# Build fresh images
-echo "BUILDING FRESH IMAGES."
-docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
-docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
-docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
-docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
-echo "IMAGES BUILD."
+if [ "$1" == "start" ]; then
+  # Build fresh images
+  echo "BUILDING FRESH IMAGES."
+  docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
+  docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
+  docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
+  docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
+  echo "IMAGES BUILD."
 
-# Launch images in order and link. The names are somewhat hardcoded becuase of values in properties file for kafka
-echo "STARTING CLUSTER COMPONENTS."
-docker run -d --name ${zk} ${sd}/${zk}:${latest}
-docker run -d --name ${broker} --link ${zk}:${zk} ${sd}/${broker}:${latest}
-# This is a trick so broker can start before producer tries to start
-echo "Sleeping for 2 seconds so broker can be online while producer starts"
-sleep 2
-docker run -d --name ${producer} --link ${broker}:${broker} ${sd}/${producer}:${latest}
-docker run -d --name ${consumer} --link ${broker}:${broker} ${sd}/${consumer}:${latest}
-echo "CLUSTER SUCCESSFULLY STARTED. YOU CAN SSH INTO CONTAINERS TO VIEW TWEETS/LOGS."
-
+  # Launch images in order and link. The names are somewhat hardcoded becuase of values in properties file for kafka
+  echo "STARTING CLUSTER COMPONENTS."
+  docker run -d --name ${zk} ${sd}/${zk}:${latest}
+  docker run -d --name ${broker} --link ${zk}:${zk} ${sd}/${broker}:${latest}
+  # This is a trick so broker can start before producer tries to start
+  echo "Sleeping for 2 seconds so broker can be online while producer starts"
+  sleep 2
+  docker run -d --name ${producer} --link ${broker}:${broker} ${sd}/${producer}:${latest}
+  docker run -d --name ${consumer} --link ${broker}:${broker} ${sd}/${consumer}:${latest}
+  echo "CLUSTER SUCCESSFULLY STARTED. YOU CAN SSH INTO CONTAINERS TO VIEW TWEETS/LOGS."
+fi
