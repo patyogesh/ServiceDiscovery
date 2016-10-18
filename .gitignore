@@ -2,5 +2,5 @@
 **/.DS_Store
 samples/GatorStream/tweepy-master/*
 samples/GatorStream/secret/*
-resources/package/*
+resources/package/kafka*
 tweet-service/producer/resources/*
