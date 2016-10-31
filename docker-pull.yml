@@ -12,7 +12,7 @@ services :
       - zookeeper
     links :
       - zookeeper
-    entrypoint : ./wait-for-it.sh zookeeper:2181
+    entrypoint : ./wait-for-it.sh zookeeper:2181 -- bin/kafka-server-start.sh config/server.properties
 
   producer :
     image : bhavneshgugnani/producer:latest
@@ -21,7 +21,7 @@ services :
       - broker
     links :
       - broker
-    entrypoint : ./wait-for-it.sh broker:9092
+    entrypoint : ./wait-for-it.sh broker:9092 -- python TweetProducer.py
 
   consumer :
     image : bhavneshgugnani/consumer:latest
@@ -30,4 +30,4 @@ services :
       - broker
     links :
       - broker
-    entrypoint : ./wait-for-it.sh broker:9092
+    entrypoint : ./wait-for-it.sh broker:9092 -- python TweetConsumer.py broker 9092 Trump
