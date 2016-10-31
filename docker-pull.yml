@@ -1,0 +1,33 @@
+#project_name : ServiceDiscovery
+version : '2'
+services :
+  zookeeper :
+    image : bhavneshgugnani/zookeeper:latest
+    container_name : zookeeper
+
+  broker :
+    image : bhavneshgugnani/broker:latest
+    container_name : broker
+    depends_on :
+      - zookeeperd
+    links :
+      - zookeeper
+    entrypoint : ./wait-for-it.sh zookeeper:2181
+
+  producer :
+    image : bhavneshgugnani/producer:latest
+    container_name : producer
+    depends_on :
+      - broker
+    links :
+      - broker
+    entrypoint : ./wait-for-it.sh broker:9092
+
+  consumer :
+    image : bhavneshgugnani/consumer:latest
+    container_name : consumer
+    depends_on :
+      - broker
+    links :
+      - broker
+    entrypoint : ./wait-for-it.sh broker:9092

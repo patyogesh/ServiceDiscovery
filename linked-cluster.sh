@@ -48,4 +48,18 @@ if [ "$1" == "start" ]; then
   docker run -d --name ${producer} --link ${broker}:${broker} ${sd}/${producer}:${latest}
   docker run -d --name ${consumer} --link ${broker}:${broker} ${sd}/${consumer}:${latest}
   echo "CLUSTER SUCCESSFULLY STARTED. YOU CAN SSH INTO CONTAINERS TO VIEW TWEETS/LOGS."
+elif [ "$1" == "push" ]; then
+  # Build fresh images
+  echo "BUILDING FRESH IMAGES."
+  docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
+  #docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
+  #docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
+  #docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
+  echo "IMAGES BUILD."
+
+  # push to hub
+  docker push ${sd}/${zk}:${latest}
+  #docker push ${sd}/${broker}:${latest}
+  #docker push ${sd}/${producer}:${latest}
+  #docker push ${sd}/${consumer}:${latest}
 fi
