@@ -1,7 +1,27 @@
 
 #!/bin/bash
-
 # Launches the Service Discovery cluster including building images and launching them and linking them while launching
+
+# Utility functions to build and push specific images to hub
+pushZookeeper() {
+  docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
+  docker push ${sd}/${zk}:${latest}
+}
+
+pushBroker() {
+  docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
+  docker push ${sd}/${broker}:${latest}
+}
+
+pushProducer() {
+  docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
+  docker push ${sd}/${producer}:${latest}
+}
+
+pushConsumer() {
+  docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
+  docker push ${sd}/${consumer}:${latest}
+}
 
 # Variables. Kind of hardcoded based on names in properties file for kafka.
 sd="bhavneshgugnani"
@@ -49,17 +69,28 @@ if [ "$1" == "start" ]; then
   docker run -d --name ${consumer} --link ${broker}:${broker} ${sd}/${consumer}:${latest}
   echo "CLUSTER SUCCESSFULLY STARTED. YOU CAN SSH INTO CONTAINERS TO VIEW TWEETS/LOGS."
 elif [ "$1" == "push" ]; then
-  # Build fresh images
-  echo "BUILDING FRESH IMAGES."
-  docker build -t ${sd}/${zk}:${latest} -f ./docker-build/ZooKeeperDockerfile .
-  docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
-  docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
-  docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
-  echo "IMAGES BUILD."
-
-  # push to hub
-  docker push ${sd}/${zk}:${latest}
-  docker push ${sd}/${broker}:${latest}
-  docker push ${sd}/${producer}:${latest}
-  docker push ${sd}/${consumer}:${latest}
+  if [ "$2" ]; then
+    if [ "$2" == "zookeeper" ]; then
+      echo "Pushing $2"
+      pushZookeeper
+    elif [ "$2" == "broker" ]; then
+      echo "Pushing $2"
+      pushBroker
+    elif [ "$2" == "producer" ]; then
+      echo "Pushing $2"
+      pushProducer
+    elif [ "$2" == "consumer" ]; then
+      echo "Pushing $2"
+      pushConsumer
+    else
+      echo "Unknown image."
+      exit -1
+    fi
+  else
+    echo "Pushing all latest images to hub."
+    pushZookeeper
+    pushBroker
+    pushProducer
+    pushConsumer
+  fi
 fi
