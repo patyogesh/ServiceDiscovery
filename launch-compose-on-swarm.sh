@@ -85,7 +85,7 @@ startapp() {
   # Point docker env to swarm master node
   eval "$(docker-machine env --swarm $master)"
   # Start application
-  docker-compose -f docker-pull.yml up && docker service scale producer=4 consumer=2
+  docker-compose -f docker-pull.yml up
   # Point docker back to local env
   eval "$(docker-machine env -u)"
 }

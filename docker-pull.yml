@@ -3,13 +3,9 @@ version : '2'
 services :
   zookeeper :
     image : bhavneshgugnani/zookeeper:latest
-    container_name : zookeeper
-    hostname : zookeeper
 
   broker :
     image : bhavneshgugnani/broker:latest
-    container_name : broker
-    hostname : broker
     depends_on :
       - zookeeper
     links :
@@ -18,8 +14,6 @@ services :
 
   producer :
     image : bhavneshgugnani/producer:latest
-    container_name : producer
-    hostname : producer
     depends_on :
       - broker
     links :
@@ -28,8 +22,6 @@ services :
 
   consumer :
     image : bhavneshgugnani/consumer:latest
-    container_name : consumer
-    hostname : consumer
     depends_on :
       - broker
     links :
