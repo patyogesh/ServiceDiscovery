@@ -35,7 +35,7 @@ This is the README file for Service Discovery framework
 
 
 
-===================Running with compose in docker-machine instances==============
+===================Running with compose in docker-machine instances(MANUAL-OLD)==============
 1. Push new images to docker hub using "./linked-clster.sh push"
 2. Run docker-machine instances for making cluster.
 3. Add nodes to swarm cluster and assing them as manager/worker node
@@ -43,3 +43,26 @@ This is the README file for Service Discovery framework
 5. (MANUAL STEP) SSH into manager node and install docker-compose ("wget https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"), make it as executable and move to /usr/local/bin
 6. Run compose as "docker-compose -f docker-pull.yml up"
 LIMITATIONS : Manual steps; only single instances of each service(wait-for-it.sh);
+
+
+
+==================Running compose on docker-machine with script(SINGLE FIRE)==================
+1. Push new images to docker hub using "./linked-clster.sh push"
+2. Fire ./launch-compose-on-swarm.sh
+3. For adding dynamic scaling of nodes, launch with "docker-compose -f docker-pull.yml scale <service>=<num>"
+LIMITATIONS : Only single consumer can run for now (seems kafka limitation); all container are run on a single worker node
+
+
+
+
+
+
+
+
+DOC elements pending
+1. UML diagrams of Analystics infrastructure As A Platform(AAAP) with application layer, (docker) interface layer, infrastructure, etc -> Yogesh
+2. Learning from project, problems/limitations, proposed better designs -> Bhavnesh
+3. Mention connectors support for on boarding multiple data platforms on this AAAP 
+
+
+
