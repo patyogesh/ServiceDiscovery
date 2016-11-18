@@ -1,5 +1,8 @@
 #project_name : ServiceDiscovery
 version : '2'
+
+env_file : .env
+
 services :
   zookeeper :
     image : bhavneshgugnani/zookeeper:latest
@@ -27,3 +30,11 @@ services :
     links :
       - broker
     entrypoint : ./wait-for-it.sh broker:9092 -- python TweetConsumer.py broker 9092 Trump
+  
+  mongodb :
+    image : mongo
+    entrypoint : /usr/bin/mongod --${DB_PATH}
+    environment :
+      - DB_PATH=${DB_PATH}
+    volumes :
+      - ${DB_PATH}:${DB_PATH}
