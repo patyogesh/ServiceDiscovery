@@ -1,0 +1,10 @@
+version : '2'
+services :
+  mongo :
+    build :
+      context : .
+      dockerfile : MongoDockerfile
+    environment :
+      - DB_PATH=${DB_PATH}
+    volumes :
+      - ${DB_PATH}:${DB_PATH}
