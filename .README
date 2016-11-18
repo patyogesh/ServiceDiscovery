@@ -31,8 +31,9 @@ This is the README file for Service Discovery framework
 ** For start, linking has been done between containers so that they resolve IP based on remote container nameprovided during build time. Later, will integrate docker-compose for same.
 
 
-REST APIs
+================================REST APIs===============================
 
+Examples:
 http://<URL>:5000/user/twitter
 http://<URL>:5000/text/uselections
 http://<URL>:5000/hashtag/startup
