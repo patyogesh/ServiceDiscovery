@@ -1,6 +1,6 @@
 version : '2'
 services :
-  mongo :
+  mongodb :
     build :
       context : .
       dockerfile : MongoDockerfile
@@ -8,3 +8,4 @@ services :
       - DB_PATH=${DB_PATH}
     volumes :
       - ${DB_PATH}:${DB_PATH}
+    hostname : mongodb
