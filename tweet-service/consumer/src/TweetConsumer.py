@@ -20,9 +20,9 @@ def createConsumer():
         print msg
         file.write(str(msg))
 
-def main():
-    t = threading.Thread(target=createConsumer)
-    t.start()
+#def main():
+#    t = threading.Thread(target=createConsumer)
+#    t.start()
 
 if __name__ == "__main__":
     try:

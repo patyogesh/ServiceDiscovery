@@ -1,5 +1,7 @@
 from flask import Flask, request
 from enum import Enum
+import subprocess
+import urllib2
 
 class ServiceTypes(Enum):
     tweet_text = 1
@@ -17,9 +19,19 @@ app = Flask(__name__)
 def index():
     return "This is Home"
 
-@app.route('/user')
-def user():
-    return "Welcome !!"
+@app.route('/filter/<source>/<type>', methods=[ 'GET' ])
+def launchFilterInstance(source, type):
+    # register request with consul for type
+    print "Source : " + source
+    print "Type : " + type
+    #urllib2.urlopen("http://consul:8500/")
+    # launch instance
+    return "Done!"
+
+@app.route('/process/<source>', methods=[ 'GET' ])
+def launchProcessInstance(source):
+    # launch consumer instances
+    return "launch Process Instance"
 
 @app.route('/text/<topic>', methods=[ 'GET', 'POST'])
 def track_text(topic):
@@ -31,7 +43,6 @@ def track_text(topic):
 
     elif request.method == 'GET':
         return ret_results(ServiceTypes.tweet_text, topic)
-
 
 @app.route('/hashtag/<hashtag>', methods=['POST', 'GET'])
 def track_hashtags(hashtag):
