@@ -33,16 +33,16 @@ services :
   
   mongodb :
     image : mongo
-    entrypoint : /usr/bin/mongod --${DB_PATH}
+    entrypoint : /usr/bin/mongod --dbpath ${DB_PATH}
     environment :
       - DB_PATH=${DB_PATH}
     volumes :
       - ${DB_PATH}:${DB_PATH}
 
-  server :
-    image : bhavneshgugnani/server:latest
-    depends_on :
-      - consul
-      -
-    links :
-      - consul
+  #server :
+  #  image : bhavneshgugnani/server:latest
+  #  depends_on :
+  #    - consul
+  #    -
+  #  links :
+  #    - consul
