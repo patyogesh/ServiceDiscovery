@@ -55,13 +55,17 @@ createswarm() {
   docker run swarm list consul://$(docker-machine ip $keystore):8500
   echo "Swarm Nodes origninal networks ..."
   docker network ls
+  eval "$(docker-machine env -u)"
+}
 
+createVisualiser() {
+  # STEP 2 (OPTIONAL)
   # Optional : Install visualiser container for UI view on master node
   # Point docker to master node to install visualiser
-  eval "$(docker-machine env $master)" 
+  eval "$(docker-machine env $master)"
   # start visualiser container
   docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock --name $visualiser manomarks/visualizer
-  echo "VISUALISER IP : $(docker-machine ip $master)" 
+  echo "VISUALISER IP : $(docker-machine ip $master)"
   echo "VISUALISER ADDRESS : http://$(docker-machine ip $master):8080/"
   open http://$(docker-machine ip $master):8080/
   # Point docker back to local env
@@ -85,7 +89,7 @@ startapp() {
   # Point docker env to swarm master node
   eval "$(docker-machine env --swarm $master)"
   # Start application
-  docker-compose -f docker-pull.yml up
+  docker-compose -f docker-pull.yml scale producer=0 && docker-compose -f docker-pull.yml up
   # Point docker back to local env
   eval "$(docker-machine env -u)"
 }
@@ -94,6 +98,7 @@ startapp() {
 cleanup
 startkeystore
 createswarm
+#createVisualiser
 # No need to create explicit overlay network as latest swarm creates one under the hood when compose is launched 
 #createoverlaynetwork
 startapp

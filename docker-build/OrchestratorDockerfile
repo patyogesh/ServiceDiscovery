@@ -3,3 +3,4 @@ MAINTAINER Tweet Service by Yogesh and Bhavnesh <patyogesh@gmail.com, bhavnesh.g
 RUN pip install flask && pip install pymongo && mkdir /usr/bin/rest-server
 COPY ./tweet-service/orchestrator/src/server.py /usr/bin/rest-server
 WORKDIR /usr/bin/rest-server/
+CMD ["/bin/bash"]
