@@ -41,4 +41,6 @@ services :
     image : bhavneshgugnani/orchestrator:latest
     links :
       - mongodb
-  entrypoint : python /usr/bin/rest-server/server.py
+    depends_on :
+      - mongodb
+    entrypoint : ./wait-for-it.sh mongodb:27017 -- python /usr/bin/rest-server/server.py
