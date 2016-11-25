@@ -23,7 +23,7 @@ secret_keys = []
     This method is to read OAuth keys/tokens from file
 '''
 
-#TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
+TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
 
 def keys_io():
     key_file = open('resources/secret.txt', 'r+')

@@ -37,8 +37,7 @@ services :
     volumes :
       - ${DB_PATH}:${DB_PATH}
 
-  #orchestrator :
-  #  image : bhavneshgugnani/orchestrator:latest
-  #  links :
-  #    - mongodb
-  #    - broker
+  orchestrator :
+    image : bhavneshgugnani/orchestrator:latest
+    links :
+      - mongodb
