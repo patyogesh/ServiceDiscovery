@@ -2,5 +2,5 @@ FROM python:2.7.12
 MAINTAINER Tweet Service by Yogesh and Bhavnesh <patyogesh@gmail.com, bhavnesh.gugnani@gmail.com>
 RUN pip install flask && pip install pymongo && mkdir /usr/bin/rest-server
 COPY ./tweet-service/orchestrator/src/server.py /usr/bin/rest-server
-WORKDIR /usr/bin/rest-server/
-CMD ["/bin/bash"]
+WORKDIR /usr/bin/rest-server
+CMD ["python", "server.py"]

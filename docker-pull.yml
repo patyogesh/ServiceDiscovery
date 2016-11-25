@@ -41,3 +41,4 @@ services :
     image : bhavneshgugnani/orchestrator:latest
     links :
       - mongodb
+  entrypoint : python /usr/bin/rest-server/server.py
