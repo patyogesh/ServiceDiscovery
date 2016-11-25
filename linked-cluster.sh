@@ -23,6 +23,11 @@ pushConsumer() {
   docker push ${sd}/${consumer}:${latest}
 }
 
+pushOrchestrator() {
+  docker build -t ${sd}/${orchestrator}:${latest} -f ./docker-build/OrchestratorDockerfile .
+  docker push ${sd}/${orchestrator}:${latest}
+}
+
 # Variables. Kind of hardcoded based on names in properties file for kafka.
 sd="bhavneshgugnani"
 latest="latest"
@@ -30,6 +35,7 @@ zk="zookeeper"
 broker="broker"
 producer="producer"
 consumer="consumer"
+orchestrator="orchestrator"
 
 # Stop and Remove local container/images for avoiding clash
 echo "CLEANING UP OLD IMAGES."
@@ -56,6 +62,7 @@ if [ "$1" == "start" ]; then
   docker build -t ${sd}/${broker}:${latest} -f ./docker-build/KafkaDockerfile .
   docker build -t ${sd}/${producer}:${latest} -f ./docker-build/ProducerDockerfile .
   docker build -t ${sd}/${consumer}:${latest} -f ./docker-build/ConsumerDockerfile .
+  docker build -t ${sd}/${orchestrator}:${latest} -f ./docker-build/RestServerDockerfile .
   echo "IMAGES BUILD."
 
   # Launch images in order and link. The names are somewhat hardcoded becuase of values in properties file for kafka
@@ -82,6 +89,9 @@ elif [ "$1" == "push" ]; then
     elif [ "$2" == "consumer" ]; then
       echo "Pushing $2"
       pushConsumer
+    elif [ "$2" == "orchestrator" ]; then
+      echo "Pushing $2"
+      pushOrchestrator
     else
       echo "Unknown image."
       exit -1
@@ -92,5 +102,6 @@ elif [ "$1" == "push" ]; then
     pushBroker
     pushProducer
     pushConsumer
+    pushOrchestrator
   fi
 fi

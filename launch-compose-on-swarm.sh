@@ -47,7 +47,7 @@ createswarm() {
   docker-machine create -d virtualbox --swarm --swarm-master --swarm-discovery="consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-store=consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-advertise=eth1:2376" $master
   # Create worker nodes and add to swarm
   docker-machine create -d virtualbox --swarm --swarm-discovery="consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-store=consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-advertise=eth1:2376" $worker1
-  docker-machine create -d virtualbox --swarm --swarm-discovery="consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-store=consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-advertise=eth1:2376" $worker2
+  #docker-machine create -d virtualbox --swarm --swarm-discovery="consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-store=consul://$(docker-machine ip $keystore):8500" --engine-opt="cluster-advertise=eth1:2376" $worker2
   docker-machine ls
   # Point docker to master node of swarm to get list of swarm nodes and all networks in swarm
   eval "$(docker-machine env --swarm $master)"
@@ -85,7 +85,7 @@ startapp() {
   # Point docker env to swarm master node
   eval "$(docker-machine env --swarm $master)"
   # Start application
-  docker-compose -f docker-pull.yml up -d && docker-compose -f docker-pull.yml scale producer=2 broker=2
+  docker-compose -f docker-pull.yml scale producer=1 broker=1 && docker-compose -f docker-pull.yml up -d && docker-compose -f docker-pull.yml scale producer=1 broker=1
   # Point docker back to local env
   eval "$(docker-machine env -u)"
 }

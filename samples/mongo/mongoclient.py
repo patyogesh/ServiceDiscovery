@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 import datetime
 
-client = MongoClient('mongodb', 27017)
+client = MongoClient('172.18.0.3', 27017)
 mydb = client['test_database_1'] # get database
 my_collection = mydb['test-database'] # get collection
 

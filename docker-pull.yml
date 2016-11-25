@@ -1,8 +1,6 @@
 #project_name : ServiceDiscovery
 version : '2'
 
-env_file : .env
-
 services :
   zookeeper :
     image : bhavneshgugnani/zookeeper:latest
@@ -39,10 +37,8 @@ services :
     volumes :
       - ${DB_PATH}:${DB_PATH}
 
-  #server :
-  #  image : bhavneshgugnani/server:latest
-  #  depends_on :
-  #    - consul
-  #    -
+  #orchestrator :
+  #  image : bhavneshgugnani/orchestrator:latest
   #  links :
-  #    - consul
+  #    - mongodb
+  #    - broker
