@@ -4,6 +4,7 @@ import subprocess
 import urllib2
 from pymongo import MongoClient
 from datetime import datetime
+import os, subprocess
 
 class ServiceTypes(Enum):
     tweet_text = 1
@@ -21,6 +22,7 @@ app = Flask(__name__)
 def index():
     return "This is Home"
 
+
 @app.route('/filter/<source>/<type>/<text>', methods=[ 'GET' ])
 def launchFilterInstance(source, type, text):
 
@@ -35,18 +37,35 @@ def launchFilterInstance(source, type, text):
                 "user-name": "Duke",
                 "source": source,
                 "type": type,
-                "Text" : text,
+                "text" : text,
                 "date": datetime.datetime.utcnow()
                 }
 
     record_id = my_collection.insert(myrecord)
     print "inserted with record-id " + record_id
-    #print mydb.collection_names()
-    #print my_collection.find_one()
+    print my_collection.find_one()
 
     # STEP-2
-    #Spawn new container to run this Filter
+    # read /etc/hosts
+    master_ip=""
+    f = open("/etc/hosts")
+    for line in f :
+        if line.__contains__("master") :
+            print line.split(" ")[0]
+            master_ip = line.split(" ")[0]
+    print "MASTER IP FOUND : " + master_ip
+    # point docker to master
+    var=os.system("docker-machine env --swarm " + master_ip)
+    os.system("eval " + var)
+    print "DOCKER POINTING TO COMPOSE"
+    # inspect docker-compose to get # of containers running
+    #os.system("docker-compose inspect --format {{}}")
 
+    # docker scale to increase container count
+
+    # point docker back to local
+
+    os.system("")
     return "Done!"
 
 @app.route('/process/<source>', methods=[ 'GET' ])

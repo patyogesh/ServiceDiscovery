@@ -23,7 +23,7 @@ secret_keys = []
     This method is to read OAuth keys/tokens from file
 '''
 
-TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
+#TOPICS = ['Trump','Hillary','Modi','nba','football','Pokemon']
 
 def keys_io():
     key_file = open('resources/secret.txt', 'r+')
@@ -54,15 +54,13 @@ class Listener(StreamListener):
         print status_code
 
 
-def consumer():
-    print 'starting consumer'
-    cons = KafkaConsumer(bootstrap_servers='localhost:9092',
-                             auto_offset_reset='earliest')
-
-    cons.subscribe(['Trump'])
-
-    for msg in cons:
-        print msg
+#def consumer():
+#    print 'starting consumer'
+#    cons = KafkaConsumer(bootstrap_servers='localhost:9092',
+#                             auto_offset_reset='earliest')
+#    cons.subscribe(['Trump'])
+#    for msg in cons:
+#        print msg
 
 
 def main():
