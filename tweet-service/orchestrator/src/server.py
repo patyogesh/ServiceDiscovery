@@ -49,7 +49,7 @@ def launchFilterInstance(user, source, attr, text):
     print my_collection.find({"text": text})
 
     # STEP-2
-    # read /etc/hosts
+    # read /etc/hosts to find master IP
     master_ip=""
     f = open("/etc/hosts")
     for line in f :

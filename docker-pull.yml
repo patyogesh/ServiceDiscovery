@@ -37,10 +37,10 @@ services :
     volumes :
       - ${DB_PATH}:${DB_PATH}
 
-  #server :
-  #  image : bhavneshgugnani/server:latest
-  #  depends_on :
-  #    - consul
-  #    -
-  #  links :
-  #    - consul
+  orchestrator :
+    image : bhavneshgugnani/orchestrator:latest
+    links :
+      - mongodb
+    depends_on :
+      - mongodb
+    entrypoint : ./wait-for-it.sh mongodb:27017 -- python /usr/bin/rest-server/server.py
