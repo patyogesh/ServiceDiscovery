@@ -63,12 +63,12 @@ def launchFilterInstance(user, source, attr, text):
     #os.system("docker-compose inspect --format {{}}")
 
     # docker scale to increase container count
-    os.system("docker ps")
-    os.system("docker-compose scale producer=2")
+    #os.system("docker ps")
+    #os.system("docker-compose scale producer=2")
     os.system("docker ps")
 
     # point docker back to local
-    os.system("eval $(docker-machine env -u)")
+    #os.system("eval $(docker-machine env -u)")
 
     return "started producer!"
 

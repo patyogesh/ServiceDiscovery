@@ -5,6 +5,8 @@ from kafka import KafkaProducer
 from pymongo import MongoClient
 import json
 import sys
+import uuid
+import time
 
 '''
 This is an array of strings in which OAuth keys/tokens are read into
@@ -31,6 +33,46 @@ def keys_io():
         secret_keys.append(key_file.readline().split("=")[1].strip())
 
 
+if __name__ == "__main__":
+    cur_uuid = uuid.uuid4()
+    try:
+        #TOPIC = sys.argv[1]
+        client = MongoClient('10.0.2.1', 27017)
+        mydb = client['test_database']
+        my_collection = mydb['test-collection']
+        for i in range(0, 5, 1):
+            record=my_collection.find({ "$and" : [{"container_type" : "producer"} , {"state" : False}] }).limit(1)
+            query_result=my_collection.update_one( {"$and" : [{"container_type" : "producer"} , {"state" : False}]},
+                                            {"$set" : {"state" : True}})
+
+            if query_result.acknowledged :
+                print "Update Success"
+                record=my_collection.find({"_id" : query_result.upserted_id})
+                TOPIC=record.text;
+                break
+            else:
+                print "Retry (%s) Update after 5 sec" %i
+                time.sleep(5)
+
+        if i == 5:
+            print "Max Update retry attempts failed"
+            exit()
+
+        print "TOPIC : " + TOPIC
+
+    except (IndexError, Exception) as e:
+        print("Error taking arguments. Taking default values.", e)
+        pass
+
+    print sys.getdefaultencoding()
+    keys_io()
+    auth = OAuthHandler(secret_keys[0], secret_keys[1])
+    auth.set_access_token(secret_keys[2], secret_keys[3])
+
+    #twitterstream = Stream(auth, Listener())
+    #twitterstream.filter(track=TOPICS)
+
+
 class Listener(StreamListener):
     print "Starting producer for Topic : " + TOPIC
     prod = KafkaProducer(bootstrap_servers='broker:9092')
@@ -51,21 +93,3 @@ class Listener(StreamListener):
     def on_error(self, status_code):
         print status_code
 
-if __name__ == "__main__":
-    try:
-        TOPIC = sys.argv[1]
-        client = MongoClient('10.0.2.1', 27017)
-        mydb = client['test_database']
-        my_collection = mydb['test-collection']
-        record=my_collection.find({ "$and" : [{"container_type" : "producer"} , {"state" : False}] }).limit(1)
-        print record
-    except (IndexError, Exception) as e:
-        print("Error taking arguments. Taking default values.", e)
-        pass
-    print sys.getdefaultencoding()
-    keys_io()
-    auth = OAuthHandler(secret_keys[0], secret_keys[1])
-    auth.set_access_token(secret_keys[2], secret_keys[3])
-
-    twitterstream = Stream(auth, Listener())
-    twitterstream.filter(track=TOPICS)
