@@ -23,27 +23,30 @@ def index():
     return "This is Home"
 
 
-@app.route('/filter/<source>/<type>/<text>', methods=[ 'GET' ])
-def launchFilterInstance(source, type, text):
+@app.route('/<user>/filter/<source>/<attr>/<text>', methods=[ 'GET' ])
+def launchFilterInstance(user, source, attr, text):
 
     #STEP -1
     #Register request with mongo-db
 
-    client = MongoClient('mongodb', 27017)
-    mydb = client['test_database_1']  # get database
-    my_collection = mydb['test-database']  # get collection
+    client = MongoClient('10.0.2.1', 27017)
+    mydb = client['test_database']  # get database
+    my_collection = mydb['test-collection']  # get collection
 
     myrecord = {
-                "user-name": "Duke",
+                "user_name": user,
                 "source": source,
-                "type": type,
+                "type": attr,
                 "text" : text,
-                "date": datetime.datetime.utcnow()
+                "state" : False,
+                "container_type" : "producer",
+                "date": datetime.utcnow()
                 }
 
     record_id = my_collection.insert(myrecord)
-    print "inserted with record-id " + record_id
-    print my_collection.find_one()
+    print "inserted with record-id " + str(record_id)
+    #print my_collection.find_one()
+    print my_collection.find({"text": text})
 
     # STEP-2
     # read /etc/hosts
@@ -55,18 +58,22 @@ def launchFilterInstance(source, type, text):
             master_ip = line.split(" ")[0]
     print "MASTER IP FOUND : " + master_ip
     # point docker to master
-    var=os.system("docker-machine env --swarm " + master_ip)
-    os.system("eval " + var)
+    os.system("eval $(docker-machine env --swarm master)")
+
     print "DOCKER POINTING TO COMPOSE"
     # inspect docker-compose to get # of containers running
     #os.system("docker-compose inspect --format {{}}")
 
     # docker scale to increase container count
+    os.system("docker ps")
+    os.system("docker-compose scale producer=2")
+    os.system("docker ps")
+
 
     # point docker back to local
+    os.system("eval $(docker-machine env -u)")
 
-    os.system("")
-    return "Done!"
+    return "started producer!"
 
 @app.route('/process/<source>', methods=[ 'GET' ])
 def launchProcessInstance(source):

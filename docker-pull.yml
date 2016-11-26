@@ -1,8 +1,6 @@
 #project_name : ServiceDiscovery
 version : '2'
 
-env_file : .env
-
 services :
   zookeeper :
     image : bhavneshgugnani/zookeeper:latest
