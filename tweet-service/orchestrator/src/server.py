@@ -28,11 +28,9 @@ def launchFilterInstance(user, source, attr, text):
 
     #STEP -1
     #Register request with mongo-db
-
     client = MongoClient('10.0.2.1', 27017)
-    mydb = client['test_database']  # get database
-    my_collection = mydb['test-collection']  # get collection
-
+    mydb = client['test_database']
+    my_collection = mydb['test-collection']
     myrecord = {
                 "user_name": user,
                 "source": source,
@@ -42,11 +40,11 @@ def launchFilterInstance(user, source, attr, text):
                 "container_type" : "producer",
                 "date": datetime.utcnow()
                 }
-
     record_id = my_collection.insert(myrecord)
     print "inserted with record-id " + str(record_id)
-    #print my_collection.find_one()
-    print my_collection.find({"text": text})
+
+    print my_collection.find({"text": text}).limit(1)
+    print my_collection.find({"_id": str(record_id)}).limit(1)
 
     # STEP-2
     # read /etc/hosts to find master IP
@@ -61,14 +59,13 @@ def launchFilterInstance(user, source, attr, text):
     os.system("eval $(docker-machine env --swarm master)")
 
     print "DOCKER POINTING TO COMPOSE"
-    # inspect docker-compose to get # of containers running
+    # inspect docker-compose to get # of containers running and scale up by 1
     #os.system("docker-compose inspect --format {{}}")
 
     # docker scale to increase container count
     os.system("docker ps")
     os.system("docker-compose scale producer=2")
     os.system("docker ps")
-
 
     # point docker back to local
     os.system("eval $(docker-machine env -u)")
