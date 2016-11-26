@@ -28,7 +28,7 @@ def launchFilterInstance(user, source, attr, text):
 
     #STEP -1
     #Register request with mongo-db
-    client = MongoClient('10.0.2.1', 27017)
+    client = MongoClient('mongodb', 27017)
     mydb = client['test_database']
     my_collection = mydb['test-collection']
     myrecord = {

@@ -37,18 +37,20 @@ if __name__ == "__main__":
     cur_uuid = uuid.uuid4()
     try:
         #TOPIC = sys.argv[1]
-        client = MongoClient('10.0.2.1', 27017)
+        client = MongoClient('mongodb', 27017)
         mydb = client['test_database']
         my_collection = mydb['test-collection']
+        id=uuid.uuid4()
         for i in range(0, 5, 1):
             record=my_collection.find({ "$and" : [{"container_type" : "producer"} , {"state" : False}] }).limit(1)
-            query_result=my_collection.update_one( {"$and" : [{"container_type" : "producer"} , {"state" : False}]},
-                                            {"$set" : {"state" : True}})
+            cursor=my_collection.update_one( {"$and" : [{"container_type" : "producer"} , {"state" : False}]},
+                                            {"$set" : {"state" : True, "uuid" : id}})
 
-            if query_result.acknowledged :
+            if cursor.acknowledged :
                 print "Update Success"
-                record=my_collection.find({"_id" : query_result.upserted_id})
-                TOPIC=record.text;
+                cursor=my_collection.find({"uuid": id})
+                for record in cursor: # should give only single resul
+                    TOPIC=record["text"];
                 break
             else:
                 print "Retry (%s) Update after 5 sec" %i
@@ -66,8 +68,8 @@ if __name__ == "__main__":
 
     print sys.getdefaultencoding()
     keys_io()
-    auth = OAuthHandler(secret_keys[0], secret_keys[1])
-    auth.set_access_token(secret_keys[2], secret_keys[3])
+    #auth = OAuthHandler(secret_keys[0], secret_keys[1])
+    #auth.set_access_token(secret_keys[2], secret_keys[3])
 
     #twitterstream = Stream(auth, Listener())
     #twitterstream.filter(track=TOPICS)
