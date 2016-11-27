@@ -13,26 +13,8 @@ services :
       - zookeeper
     entrypoint : ./wait-for-it.sh zookeeper:2181 -- bin/kafka-server-start.sh config/server.properties
 
-  producer :
-    image : bhavneshgugnani/producer:latest
-    depends_on :
-      - broker
-      - mongodb
-    links :
-      - broker
-      - mongodb
-    entrypoint : ./wait-for-it.sh broker:9092 -- ./wait-for-it.sh mongodb:27017 -- python TweetProducer.py
-
-  consumer :
-    image : bhavneshgugnani/consumer:latest
-    depends_on :
-      - broker
-    links :
-      - broker
-    entrypoint : ./wait-for-it.sh broker:9092 -- python TweetConsumer.py broker 9092 Trump
-  
   mongodb :
-    image : mongo
+    image : bhavneshgugnani/mongo:latest
     entrypoint : /usr/bin/mongod --dbpath ${DB_PATH}
     environment :
       - DB_PATH=${DB_PATH}
@@ -45,4 +27,22 @@ services :
       - mongodb
     depends_on :
       - mongodb
-    entrypoint : ./wait-for-it.sh mongodb:27017 -- python /usr/bin/rest-server/server.py
+    entrypoint : ./wait-for-it.sh broker:9092 -- python /usr/bin/orchestrator/server.py
+
+#  producer :
+#    image : bhavneshgugnani/producer:latest
+#    depends_on :
+#      - broker
+#      - mongodb
+#    links :
+#      - broker
+#      - mongodb
+#    entrypoint : ./wait-for-it.sh broker:9092 -- ./wait-for-it.sh mongodb:27017 -- python TweetProducer.py
+
+  consumer :
+    image : bhavneshgugnani/consumer:latest
+    depends_on :
+      - broker
+    links :
+      - broker
+    entrypoint : ./wait-for-it.sh broker:9092 -- python TweetConsumer.py broker 9092 Trump

@@ -28,6 +28,11 @@ pushOrchestrator() {
   docker push ${sd}/${orchestrator}:${latest}
 }
 
+pushMongodb() {
+  docker build -t ${sd}/${mongodb}:${latest} -f ./docker-build/MongodbDockerfile .
+  docker push ${sd}/${mongodb}:${latest}
+}
+
 # Variables. Kind of hardcoded based on names in properties file for kafka.
 sd="bhavneshgugnani"
 latest="latest"
@@ -36,6 +41,7 @@ broker="broker"
 producer="producer"
 consumer="consumer"
 orchestrator="orchestrator"
+mongodb="mongodb"
 
 # Stop and Remove local container/images for avoiding clash
 echo "CLEANING UP OLD IMAGES."
@@ -92,6 +98,9 @@ elif [ "$1" == "push" ]; then
     elif [ "$2" == "orchestrator" ]; then
       echo "Pushing $2"
       pushOrchestrator
+    elif [ "$2" == "mongodb" ]; then
+      echo "Pushing $2"
+      pushMongodb
     else
       echo "Unknown image."
       exit -1
@@ -103,5 +112,6 @@ elif [ "$1" == "push" ]; then
     pushProducer
     pushConsumer
     pushOrchestrator
+    pushMongodb
   fi
 fi

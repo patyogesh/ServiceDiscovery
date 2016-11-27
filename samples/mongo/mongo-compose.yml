@@ -3,7 +3,7 @@ services :
   mongodb :
     build :
       context : .
-      dockerfile : MongoDockerfile
+      dockerfile : MongodbDockerfile
     environment :
       - DB_PATH=${DB_PATH}
     volumes :
