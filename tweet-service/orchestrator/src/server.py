@@ -14,35 +14,6 @@ class ServiceTypes(Enum):
     user = 7
     track_place = 8
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return "This is Home"
-
-@app.route('/<user>/filter/<source>/<attr>/<text>', methods=[ 'GET' ])
-def launchFilterInstance(user, source, attr, text):
-
-    #STEP 1 : Register request with mongo-db
-    registerWithMongoDB(user, source, attr, text)
-
-    # STEP 2 : Start new instance
-    startInstance("producer")
-
-    return "started producer!"
-
-@app.route('/<user>/process/<source>/<attr>/<text>', methods=[ 'GET' ])
-def launchProcessInstance(user, source, attr, text):
-
-    registerWithMongoDB(user, source, attr, text)
-
-    startInstance("consumer")
-
-    return "Started Consumer!"
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
 def registerWithMongoDB(user, source, attr, text):
     client = MongoClient('mongodb', 27017)
     mydb = client['test_database']
@@ -79,9 +50,40 @@ def startInstance(instanceType):
     # os.system("docker-compose inspect --format {{}}")
 
     # docker scale to increase container count
-    # os.system("docker ps")
-    # os.system("docker-compose scale " + instanceType + "=2")
+    os.system("docker ps")
+    os.system("docker-compose scale " + instanceType + "=2")
     os.system("docker ps")
 
     # point docker back to local
     os.system("eval $(docker-machine env -u)")
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "This is Home"
+
+@app.route('/<user>/filter/<source>/<attr>/<text>', methods=[ 'GET' ])
+def launchFilterInstance(user, source, attr, text):
+
+    #STEP 1 : Register request with mongo-db
+    registerWithMongoDB(user, source, attr, text)
+
+    # STEP 2 : Start new instance
+    startInstance("producer")
+
+    return "started producer!"
+
+@app.route('/<user>/process/<source>/<attr>/<text>', methods=[ 'GET' ])
+def launchProcessInstance(user, source, attr, text):
+
+    registerWithMongoDB(user, source, attr, text)
+
+    startInstance("consumer")
+
+    return "Started Consumer!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+
